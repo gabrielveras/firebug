@@ -489,7 +489,7 @@ Firebug.Debugger = Obj.extend(ActivableModule,
     stepInto: function(context)
     {
         context.getTool("debugger").stepInto();
-        /*** SWARM DEBUGGER - BEGIN ***/
+/*** SWARM DEBUGGER - BEGIN ***/
         // CREATE NAMESPACE [INVOKING]
         window.oNamespaceInvoking = { fullPath : "FireSwarm - Invoking",
                                       name     : "FireSwarm - Invoking" };
@@ -620,7 +620,7 @@ Firebug.Debugger = Obj.extend(ActivableModule,
             }
         }
         fWaitMethodsAndSession();
-        /*** SWARM DEBUGGER - END ***/
+/*** SWARM DEBUGGER - END ***/
     },
 
     stepOut: function(context)
