@@ -284,7 +284,59 @@ var BreakpointStore = Obj.extend(Module,
         // As soon as the breakpoint is (asynchronously) created on the server side and
         // response received, each tool instance fires "onBreakpointAdded" event.
         this.dispatch("onAddBreakpoint", [bp]);
-
+/*** SWARM DEBUGGER - BEGIN ***/
+        // CREATE NAMESPACE
+        window.oNamespace = { fullPath : url,
+                              name     : url };
+        var oRequestNamespace = new XMLHttpRequest();
+        oRequestNamespace.onload = function() { window.oNamespace = JSON.parse(oRequestNamespace.responseText); };
+        oRequestNamespace.open("POST", "http://localhost:8080/namespaces/");
+        oRequestNamespace.setRequestHeader("Content-Type", "application/json");
+        oRequestNamespace.send(JSON.stringify(window.oNamespace));
+        // CREATE TYPE
+        window.oType = { fullName  : url,
+                         fullPath  : url,
+                         name      : url,
+                         source    : url }
+        var fWaitNamespaceAndSession = function() {
+            if ((typeof window.oNamespace.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
+                var oRequestType = new XMLHttpRequest();
+                oRequestType.onload = function() {
+                    window.oType = JSON.parse(oRequestType.responseText);
+                    window.oType.type = window.oNamespace._links.self.href;
+                    window.oType.session = window.oSession._links.self.href;
+                };
+                oRequestType.open("POST", "http://localhost:8080/types/");
+                oRequestType.setRequestHeader("Content-Type", "application/json");
+                window.oType.namespace = window.oNamespace._links.self.href;
+                window.oType.session = window.oSession._links.self.href;
+                oRequestType.send(JSON.stringify(window.oType));
+            } else {
+                setTimeout(function() { fWaitNamespaceAndSession(); }, 250);
+            }
+        }
+        fWaitNamespaceAndSession();
+        // CREATE BREAKPOINT
+        window.oBreakpoint = { charEnd    : "-1",
+                               charStart  : "-1",
+                               lineNumber : bp.lineNo+1 }; // because lines start in zero
+        var fWaitType = function() {
+            if (typeof window.oType.id !== "undefined") {
+                var oRequestBreakpoint = new XMLHttpRequest();
+                oRequestBreakpoint.onload = function() {
+                    window.oBreakpoint = JSON.parse(oRequestBreakpoint.responseText);
+                    window.oBreakpoint.type = window.oType._links.self.href;
+                };
+                oRequestBreakpoint.open("POST", "http://localhost:8080/breakpoints/");
+                oRequestBreakpoint.setRequestHeader("Content-Type", "application/json");
+                window.oBreakpoint.type = window.oType._links.self.href;
+                oRequestBreakpoint.send(JSON.stringify(window.oBreakpoint));
+            } else {
+                setTimeout(function() { fWaitType(); }, 250);
+            }
+        }
+        fWaitType();
+/*** SWARM DEBUGGER - END ***/
         return bp;
     },
 
