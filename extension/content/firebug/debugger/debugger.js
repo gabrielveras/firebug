@@ -489,138 +489,138 @@ Firebug.Debugger = Obj.extend(ActivableModule,
     stepInto: function(context)
     {
         context.getTool("debugger").stepInto();
-/*** SWARM DEBUGGER - BEGIN ***/
-// CREATE NAMESPACE [INVOKING]
-window.oNamespaceInvoking = { fullPath : "FireSwarm - Invoking",
-                              name     : "FireSwarm - Invoking" };
-var fPostNamespaceInvoking = function() {
-    var oRequestNamespaceInvoking = new XMLHttpRequest();
-    oRequestNamespaceInvoking.onload = function() { window.oNamespaceInvoking = JSON.parse(oRequestNamespaceInvoking.responseText); };
-    oRequestNamespaceInvoking.open("POST", "http://localhost:8080/namespaces/");
-    oRequestNamespaceInvoking.setRequestHeader("Content-Type", "application/json");
-    oRequestNamespaceInvoking.send(JSON.stringify(window.oNamespaceInvoking));
-}
-fPostNamespaceInvoking();
-// CREATE TYPE [INVOKING]
-window.oTypeInvoking = { fullName : "FireSwarm - Invoking",
-                         fullPath : "FireSwarm - Invoking",
-                         name     : "FireSwarm - Invoking",
-                         source   : "FireSwarm - Invoking" };
-var fWaitNamespaceAndSessionInvoking = function() {
-    if ((typeof window.oNamespaceInvoking.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
-        var oRequestTypeInvoking = new XMLHttpRequest();
-        oRequestTypeInvoking.onload = function() {
-            window.oTypeInvoking = JSON.parse(oRequestTypeInvoking.responseText);
-            window.oTypeInvoking.type = window.oNamespaceInvoking._links.self.href;
-            window.oTypeInvoking.session = window.oSession._links.self.href;
-        };
-        oRequestTypeInvoking.open("POST", "http://localhost:8080/types/");
-        oRequestTypeInvoking.setRequestHeader("Content-Type", "application/json");
-        window.oTypeInvoking.namespace = window.oNamespaceInvoking._links.self.href;
-        window.oTypeInvoking.session = window.oSession._links.self.href;
-        oRequestTypeInvoking.send(JSON.stringify(window.oTypeInvoking));
-    } else {
-        setTimeout(function() { fWaitNamespaceAndSessionInvoking(); }, 250);
-    }
-}
-fWaitNamespaceAndSessionInvoking();
-// CREATE METHOD [INVOKING]
-window.oMethodInvoking = { key       : "FireSwarm - Invoking",
-                           name      : "FireSwarm - Invoking",
-                           signature : "FireSwarm - Invoking" };
-var fWaitTypeInvoking = function() {
-    if (typeof window.oTypeInvoking.id !== "undefined") {
-        var oRequestMethodInvoking = new XMLHttpRequest();
-        oRequestMethodInvoking.onload = function() {
-            window.oMethodInvoking = JSON.parse(oRequestMethodInvoking.responseText);
-            window.oMethodInvoking.type = window.oTypeInvoking._links.self.href;
-        };
-        oRequestMethodInvoking.open("POST", "http://localhost:8080/methods/");
-        oRequestMethodInvoking.setRequestHeader("Content-Type", "application/json");
-        window.oMethodInvoking.type = window.oTypeInvoking._links.self.href;
-        oRequestMethodInvoking.send(JSON.stringify(window.oMethodInvoking));
-    } else {
-        setTimeout(function() { fWaitTypeInvoking(); }, 250);
-    }
-}
-fWaitTypeInvoking();
-// CREATE NAMESPACE [INVOKED]
-window.oNamespaceInvoked = { fullPath : "FireSwarm - Invoked",
-                             name     : "FireSwarm - Invoked" };
-var fPostNamespaceInvoked = function() {
-    var oRequestNamespaceInvoked = new XMLHttpRequest();
-    oRequestNamespaceInvoked.onload = function() { window.oNamespaceInvoked = JSON.parse(oRequestNamespaceInvoked.responseText); };
-    oRequestNamespaceInvoked.open("POST", "http://localhost:8080/namespaces/");
-    oRequestNamespaceInvoked.setRequestHeader("Content-Type", "application/json");
-    oRequestNamespaceInvoked.send(JSON.stringify(window.oNamespaceInvoked));
-}
-fPostNamespaceInvoked();
-// CREATE TYPE [INVOKED]
-window.oTypeInvoked = { fullName : "FireSwarm - Invoked",
-                        fullPath : "FireSwarm - Invoked",
-                        name     : "FireSwarm - Invoked",
-                        source   : "FireSwarm - Invoked" };
-var fWaitNamespaceAndSessionInvoked = function() {
-    if ((typeof window.oNamespaceInvoked.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
-        var oRequestTypeInvoked = new XMLHttpRequest();
-        oRequestTypeInvoked.onload = function() {
-            window.oTypeInvoked = JSON.parse(oRequestTypeInvoked.responseText);
-            window.oTypeInvoked.type = window.oNamespaceInvoked._links.self.href;
-            window.oTypeInvoked.session = window.oSession._links.self.href;
-        };
-        oRequestTypeInvoked.open("POST", "http://localhost:8080/types/");
-        oRequestTypeInvoked.setRequestHeader("Content-Type", "application/json");
-        window.oTypeInvoked.namespace = window.oNamespaceInvoked._links.self.href;
-        window.oTypeInvoked.session = window.oSession._links.self.href;
-        oRequestTypeInvoked.send(JSON.stringify(window.oTypeInvoked));
-    } else {
-        setTimeout(function() { fWaitNamespaceAndSessionInvoked(); }, 250);
-    }
-}
-fWaitNamespaceAndSessionInvoked();
-// CREATE METHOD [INVOKED]
-window.oMethodInvoked = { key       : "FireSwarm - Invoked",
-                          name      : "FireSwarm - Invoked",
-                          signature : "FireSwarm - Invoked" };
-var fWaitTypeInvoked = function() {
-    if (typeof window.oTypeInvoked.id !== "undefined") {
-        var oRequestMethodInvoked = new XMLHttpRequest();
-        oRequestMethodInvoked.onload = function() {
-            window.oMethodInvoked = JSON.parse(oRequestMethodInvoked.responseText);
-            window.oMethodInvoked.type = window.oTypeInvoked._links.self.href;
-        };
-        oRequestMethodInvoked.open("POST", "http://localhost:8080/methods/");
-        oRequestMethodInvoked.setRequestHeader("Content-Type", "application/json");
-        window.oMethodInvoked.type = window.oTypeInvoked._links.self.href;
-        oRequestMethodInvoked.send(JSON.stringify(window.oMethodInvoked));
-    } else {
-        setTimeout(function() { fWaitTypeInvoked(); }, 250);
-    }
-}
-fWaitTypeInvoked();
-// CREATE INVOCATION
-window.oInvocation = {};
-var fWaitMethodsAndSession = function() {
-    if ((typeof window.oMethodInvoking.id !== "undefined") && (typeof window.oMethodInvoked.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
-        var oRequestInvocation = new XMLHttpRequest();
-        oRequestInvocation.onload = function() {
-            window.oInvocation = JSON.parse(oRequestInvocation.responseText);
-            window.oInvocation.invoking = window.oMethodInvoking._links.self.href;
-            window.oInvocation.invoked = window.oMethodInvoked._links.self.href;
-            window.oInvocation.session = window.oSession._links.self.href;
-        };
-        oRequestInvocation.open("POST", "http://localhost:8080/invocations/");
-        oRequestInvocation.setRequestHeader("Content-Type", "application/json");
-        window.oInvocation.invoking = window.oMethodInvoking._links.self.href;
-        window.oInvocation.invoked = window.oMethodInvoked._links.self.href;
-        window.oInvocation.session = window.oSession._links.self.href;
-        oRequestInvocation.send(JSON.stringify(window.oInvocation));
-    } else {
-        setTimeout(function() { fWaitMethodsAndSession(); }, 250);
-    }
-}
-fWaitMethodsAndSession();
-/*** SWARM DEBUGGER - END ***/
+        /*** SWARM DEBUGGER - BEGIN ***/
+        // CREATE NAMESPACE [INVOKING]
+        window.oNamespaceInvoking = { fullPath : "FireSwarm - Invoking",
+                                      name     : "FireSwarm - Invoking" };
+        var fPostNamespaceInvoking = function() {
+            var oRequestNamespaceInvoking = new XMLHttpRequest();
+            oRequestNamespaceInvoking.onload = function() { window.oNamespaceInvoking = JSON.parse(oRequestNamespaceInvoking.responseText); };
+            oRequestNamespaceInvoking.open("POST", "http://localhost:8080/namespaces/");
+            oRequestNamespaceInvoking.setRequestHeader("Content-Type", "application/json");
+            oRequestNamespaceInvoking.send(JSON.stringify(window.oNamespaceInvoking));
+        }
+        fPostNamespaceInvoking();
+        // CREATE TYPE [INVOKING]
+        window.oTypeInvoking = { fullName : "FireSwarm - Invoking",
+                                 fullPath : "FireSwarm - Invoking",
+                                 name     : "FireSwarm - Invoking",
+                                 source   : "FireSwarm - Invoking" };
+        var fWaitNamespaceAndSessionInvoking = function() {
+            if ((typeof window.oNamespaceInvoking.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
+                var oRequestTypeInvoking = new XMLHttpRequest();
+                oRequestTypeInvoking.onload = function() {
+                    window.oTypeInvoking = JSON.parse(oRequestTypeInvoking.responseText);
+                    window.oTypeInvoking.type = window.oNamespaceInvoking._links.self.href;
+                    window.oTypeInvoking.session = window.oSession._links.self.href;
+                };
+                oRequestTypeInvoking.open("POST", "http://localhost:8080/types/");
+                oRequestTypeInvoking.setRequestHeader("Content-Type", "application/json");
+                window.oTypeInvoking.namespace = window.oNamespaceInvoking._links.self.href;
+                window.oTypeInvoking.session = window.oSession._links.self.href;
+                oRequestTypeInvoking.send(JSON.stringify(window.oTypeInvoking));
+            } else {
+                setTimeout(function() { fWaitNamespaceAndSessionInvoking(); }, 250);
+            }
+        }
+        fWaitNamespaceAndSessionInvoking();
+        // CREATE METHOD [INVOKING]
+        window.oMethodInvoking = { key       : "FireSwarm - Invoking",
+                                   name      : "FireSwarm - Invoking",
+                                   signature : "FireSwarm - Invoking" };
+        var fWaitTypeInvoking = function() {
+            if (typeof window.oTypeInvoking.id !== "undefined") {
+                var oRequestMethodInvoking = new XMLHttpRequest();
+                oRequestMethodInvoking.onload = function() {
+                    window.oMethodInvoking = JSON.parse(oRequestMethodInvoking.responseText);
+                    window.oMethodInvoking.type = window.oTypeInvoking._links.self.href;
+                };
+                oRequestMethodInvoking.open("POST", "http://localhost:8080/methods/");
+                oRequestMethodInvoking.setRequestHeader("Content-Type", "application/json");
+                window.oMethodInvoking.type = window.oTypeInvoking._links.self.href;
+                oRequestMethodInvoking.send(JSON.stringify(window.oMethodInvoking));
+            } else {
+                setTimeout(function() { fWaitTypeInvoking(); }, 250);
+            }
+        }
+        fWaitTypeInvoking();
+        // CREATE NAMESPACE [INVOKED]
+        window.oNamespaceInvoked = { fullPath : "FireSwarm - Invoked",
+                                     name     : "FireSwarm - Invoked" };
+        var fPostNamespaceInvoked = function() {
+            var oRequestNamespaceInvoked = new XMLHttpRequest();
+            oRequestNamespaceInvoked.onload = function() { window.oNamespaceInvoked = JSON.parse(oRequestNamespaceInvoked.responseText); };
+            oRequestNamespaceInvoked.open("POST", "http://localhost:8080/namespaces/");
+            oRequestNamespaceInvoked.setRequestHeader("Content-Type", "application/json");
+            oRequestNamespaceInvoked.send(JSON.stringify(window.oNamespaceInvoked));
+        }
+        fPostNamespaceInvoked();
+        // CREATE TYPE [INVOKED]
+        window.oTypeInvoked = { fullName : "FireSwarm - Invoked",
+                                fullPath : "FireSwarm - Invoked",
+                                name     : "FireSwarm - Invoked",
+                                source   : "FireSwarm - Invoked" };
+        var fWaitNamespaceAndSessionInvoked = function() {
+            if ((typeof window.oNamespaceInvoked.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
+                var oRequestTypeInvoked = new XMLHttpRequest();
+                oRequestTypeInvoked.onload = function() {
+                    window.oTypeInvoked = JSON.parse(oRequestTypeInvoked.responseText);
+                    window.oTypeInvoked.type = window.oNamespaceInvoked._links.self.href;
+                    window.oTypeInvoked.session = window.oSession._links.self.href;
+                };
+                oRequestTypeInvoked.open("POST", "http://localhost:8080/types/");
+                oRequestTypeInvoked.setRequestHeader("Content-Type", "application/json");
+                window.oTypeInvoked.namespace = window.oNamespaceInvoked._links.self.href;
+                window.oTypeInvoked.session = window.oSession._links.self.href;
+                oRequestTypeInvoked.send(JSON.stringify(window.oTypeInvoked));
+            } else {
+                setTimeout(function() { fWaitNamespaceAndSessionInvoked(); }, 250);
+            }
+        }
+        fWaitNamespaceAndSessionInvoked();
+        // CREATE METHOD [INVOKED]
+        window.oMethodInvoked = { key       : "FireSwarm - Invoked",
+                                  name      : "FireSwarm - Invoked",
+                                  signature : "FireSwarm - Invoked" };
+        var fWaitTypeInvoked = function() {
+            if (typeof window.oTypeInvoked.id !== "undefined") {
+                var oRequestMethodInvoked = new XMLHttpRequest();
+                oRequestMethodInvoked.onload = function() {
+                    window.oMethodInvoked = JSON.parse(oRequestMethodInvoked.responseText);
+                    window.oMethodInvoked.type = window.oTypeInvoked._links.self.href;
+                };
+                oRequestMethodInvoked.open("POST", "http://localhost:8080/methods/");
+                oRequestMethodInvoked.setRequestHeader("Content-Type", "application/json");
+                window.oMethodInvoked.type = window.oTypeInvoked._links.self.href;
+                oRequestMethodInvoked.send(JSON.stringify(window.oMethodInvoked));
+            } else {
+                setTimeout(function() { fWaitTypeInvoked(); }, 250);
+            }
+        }
+        fWaitTypeInvoked();
+        // CREATE INVOCATION
+        window.oInvocation = {};
+        var fWaitMethodsAndSession = function() {
+            if ((typeof window.oMethodInvoking.id !== "undefined") && (typeof window.oMethodInvoked.id !== "undefined") && (typeof window.oSession.id !== "undefined")) {
+                var oRequestInvocation = new XMLHttpRequest();
+                oRequestInvocation.onload = function() {
+                    window.oInvocation = JSON.parse(oRequestInvocation.responseText);
+                    window.oInvocation.invoking = window.oMethodInvoking._links.self.href;
+                    window.oInvocation.invoked = window.oMethodInvoked._links.self.href;
+                    window.oInvocation.session = window.oSession._links.self.href;
+                };
+                oRequestInvocation.open("POST", "http://localhost:8080/invocations/");
+                oRequestInvocation.setRequestHeader("Content-Type", "application/json");
+                window.oInvocation.invoking = window.oMethodInvoking._links.self.href;
+                window.oInvocation.invoked = window.oMethodInvoked._links.self.href;
+                window.oInvocation.session = window.oSession._links.self.href;
+                oRequestInvocation.send(JSON.stringify(window.oInvocation));
+            } else {
+                setTimeout(function() { fWaitMethodsAndSession(); }, 250);
+            }
+        }
+        fWaitMethodsAndSession();
+        /*** SWARM DEBUGGER - END ***/
     },
 
     stepOut: function(context)
