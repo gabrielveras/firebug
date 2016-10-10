@@ -7,5 +7,5 @@ HOW TO
 
 * See `Run Firebug From Source` in `README.md`
 
-* Open `about:config` and turn parameter `xpinstall.signatures.required` to `false`
+* Open [about:config](about:config) and turn parameter `xpinstall.signatures.required` to `false`
 
